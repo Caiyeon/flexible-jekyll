@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Concurrent vs. Asynchronous - Hello there!</title>
+
+  <!-- Edit site and author settings in `_config.yml` to make the social details your own -->
+
+    <meta content="Hello there!" property="og:site_name">
+  
+    <meta content="Concurrent vs. Asynchronous" property="og:title">
+  
+  
+    <meta content="article" property="og:type">
+  
+  
+    <meta content="Defining terminology" property="og:description">
+  
+  
+    <meta content="/concurrent-vs-asynchronous/" property="og:url">
+  
+  
+    <meta content="2018-03-29T15:21:20-07:00" property="article:published_time">
+    <meta content="/about/" property="article:author">
+  
+  
+    <meta content="/flexible-jekyll/assets/img/tony-cai.jpg" property="og:image">
+  
+  
+    
+  
+  
+    
+    <meta content="Programming" property="article:tag">
+    
+  
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@">
+    <meta name="twitter:creator" content="@">
+  
+    <meta name="twitter:title" content="Concurrent vs. Asynchronous">
+  
+  
+    <meta name="twitter:url" content="/concurrent-vs-asynchronous/">
+  
+  
+    <meta name="twitter:description" content="Defining terminology">
+  
+  
+    <meta name="twitter:image:src" content="/flexible-jekyll/assets/img/tony-cai.jpg">
+  
+
+	<meta name="description" content="Defining terminology">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/flexible-jekyll/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/flexible-jekyll/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/flexible-jekyll/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/flexible-jekyll/assets/img/favicon/apple-touch-icon-114x114.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#263959">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#263959">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#263959">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/flexible-jekyll/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/flexible-jekyll/assets/css/main.css">
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <aside class="sidebar">
+  <header>
+    <div class="about">
+      <div class="cover-author-image">
+        <a href="/flexible-jekyll/"><img src="/flexible-jekyll/assets/img/tony-cai.jpg" alt="Tony Cai"></a>
+      </div>
+      <div class="author-name">Tony Cai</div>
+      <p>Student at Simon Fraser University in Vancouver, Canada.</p>
+    </div>
+  </header> <!-- End Header -->
+  <footer>
+    <section class="contact">
+      <h3 class="contact-title">Contact me</h3>
+      <ul>
+        
+          <li><a><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+        
+        
+          <li><a><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+        
+        
+          <li class="github"><a href="http://github.com/caiyeon" target="_blank"><i class="fa fa-github"></i></a></li>
+        
+        
+          <li class="linkedin"><a><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+        
+        
+          <li class="email"><a><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li>
+        
+      </ul>
+    </section> <!-- End Section Contact -->
+    <div class="copyright">
+      <p>2018 &copy; Tony Cai</p>
+    </div>
+  </footer> <!-- End Footer -->
+</aside> <!-- End Sidebar -->
+<div class="content-box clearfix">
+  <article class="article-page">
+  <div class="page-content">
+    
+    
+    <div class="wrap-content">
+      <header class="header-page">
+        <h1 class="page-title">Concurrent vs. Asynchronous</h1>
+        <div class="page-date"><span>2018, Mar 29&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+      </header>
+      <p>Once upon a time, most computers had one CPU containing one core. Parallelism was often an afterthought on programs and programming languages. Nowadays, it seems that everyone’s computer and toaster has multiple cores. As a consequence, parallel programming has become more of a necessity rather than a nice-to-have.</p>
+
+<p>When it comes to programming, some people tend to confuse asynchronism with concurrency. In reality, it’s not that they don’t know the difference - it’s more likely that they haven’t mapped the terms to their respective concepts.</p>
+
+<hr />
+
+<h2 id="asynchronism">Asynchronism</h2>
+
+<p>Consider this code: <a href="https://play.golang.org/p/TWFko5ulvBq">Try it</a></p>
+
+<figure class="highlight"><pre><code class="language-go" data-lang="go"><span class="k">import</span><span class="x"> </span><span class="s">"fmt"</span><span class="x">
+
+</span><span class="k">func</span><span class="x"> </span><span class="n">main</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+    </span><span class="k">for</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="m">0</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="m">10</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="o">++</span><span class="x"> </span><span class="p">{</span><span class="x">
+        </span><span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"%d "</span><span class="p">,</span><span class="x"> </span><span class="n">i</span><span class="p">)</span><span class="x">
+    </span><span class="p">}</span><span class="x">
+    </span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Done!"</span><span class="p">)</span><span class="x">
+</span><span class="p">}</span></code></pre></figure>
+
+<p>This simple program would print <code class="highlighter-rouge">0 1 2 3 4 5 6 7 8 9 Done!</code>. This program would execute <i>synchronously</i> because each execution is done at a time. Every <code class="highlighter-rouge">fmt.Printf()</code> must be finished, before printing the next number.</p>
+
+<p>As a contrast, consider this code: <a href="https://play.golang.org/p/LAnDCr8ip6c">Try it</a></p>
+
+<figure class="highlight"><pre><code class="language-go" data-lang="go"><span class="k">import</span><span class="x"> </span><span class="s">"time"</span><span class="x">
+</span><span class="k">import</span><span class="x"> </span><span class="s">"fmt"</span><span class="x">
+
+</span><span class="k">func</span><span class="x"> </span><span class="n">main</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+    </span><span class="k">go</span><span class="x"> </span><span class="n">printTheNumbers</span><span class="p">()</span><span class="x">
+    </span><span class="n">time</span><span class="o">.</span><span class="n">Sleep</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Second</span><span class="o">/</span><span class="m">10</span><span class="p">)</span><span class="x"> </span><span class="c">// give some time for program to finish</span><span class="x">
+    </span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Done!"</span><span class="p">)</span><span class="x">
+</span><span class="p">}</span><span class="x">
+
+</span><span class="k">func</span><span class="x"> </span><span class="n">printTheNumbers</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+    </span><span class="k">for</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="m">0</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="m">10</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="o">++</span><span class="x"> </span><span class="p">{</span><span class="x">
+        </span><span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"%d "</span><span class="p">,</span><span class="x"> </span><span class="n">i</span><span class="p">)</span><span class="x">
+    </span><span class="p">}</span><span class="x">
+</span><span class="p">}</span></code></pre></figure>
+
+<p>This time, printing 0 through 9 is done on a separate thread using <code class="highlighter-rouge">go &lt;function&gt;</code>. Basically, this is the main thread saying:</p>
+<blockquote>
+  <p>Do this separately, on your own time. I don’t care about the return value of this function.</p>
+</blockquote>
+
+<p>And that’s the entire premise of asynchronous programming. It involves a thread calling a function without waiting for it to return, and proceeding to do other things.</p>
+
+<p>You may note that the numbers 0 through 9 still get printed consecutively. This is because the second thread<sup>1</sup> still prints the numbers in order in the for loop.</p>
+
+<hr />
+
+<h2 id="concurrency">Concurrency</h2>
+
+<p>Concurrency is when multiple things can be done at the same time.</p>
+
+<p>Consider the following:</p>
+
+<figure class="highlight"><pre><code class="language-go" data-lang="go"><span class="k">import</span><span class="x"> </span><span class="s">"time"</span><span class="x">
+</span><span class="k">import</span><span class="x"> </span><span class="s">"fmt"</span><span class="x">
+</span><span class="k">import</span><span class="x"> </span><span class="s">"math/rand"</span><span class="x">
+
+</span><span class="k">var</span><span class="x"> </span><span class="n">seed</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="m">43</span><span class="x">
+</span><span class="k">var</span><span class="x"> </span><span class="n">random</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">rand</span><span class="o">.</span><span class="n">New</span><span class="p">(</span><span class="n">rand</span><span class="o">.</span><span class="n">NewSource</span><span class="p">(</span><span class="kt">int64</span><span class="p">(</span><span class="n">seed</span><span class="p">)))</span><span class="x">
+
+</span><span class="k">func</span><span class="x"> </span><span class="n">main</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+    </span><span class="k">for</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">:=</span><span class="x"> </span><span class="m">0</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="x"> </span><span class="o">&lt;</span><span class="x"> </span><span class="m">10</span><span class="p">;</span><span class="x"> </span><span class="n">i</span><span class="o">++</span><span class="x"> </span><span class="p">{</span><span class="x">
+        </span><span class="k">go</span><span class="x"> </span><span class="n">printThisNumber</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="x">
+    </span><span class="p">}</span><span class="x">
+    </span><span class="n">time</span><span class="o">.</span><span class="n">Sleep</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Second</span><span class="o">/</span><span class="m">10</span><span class="p">)</span><span class="x"> </span><span class="c">// give some time for program to finish</span><span class="x">
+    </span><span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s">"Done!"</span><span class="p">)</span><span class="x">
+</span><span class="p">}</span><span class="x">
+
+</span><span class="k">func</span><span class="x"> </span><span class="n">printThisNumber</span><span class="p">(</span><span class="n">i</span><span class="x"> </span><span class="kt">int</span><span class="p">)</span><span class="x"> </span><span class="p">{</span><span class="x">
+    </span><span class="c">// sleep for a random small amount of time</span><span class="x">
+    </span><span class="n">time</span><span class="o">.</span><span class="n">Sleep</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">Intn</span><span class="p">(</span><span class="m">5</span><span class="p">))</span><span class="x"> </span><span class="o">*</span><span class="x"> </span><span class="n">time</span><span class="o">.</span><span class="n">Millisecond</span><span class="p">)</span><span class="x">
+    </span><span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"%d "</span><span class="p">,</span><span class="x"> </span><span class="n">i</span><span class="p">)</span><span class="x">
+</span><span class="p">}</span></code></pre></figure>
+
+<p>In this example, the main program creates 10 threads. Each thread sleeps for a random amount of time, before printing its assigned number. Therefore, when you change the random seed, you change the amount of time each thread sleeps and the order of the output.</p>
+
+<p>In this program, all 10 threads are doing their own work. These 10 threads might be running in parallel. I say <i>might</i> because assigning threads to processor cores are not always done on a 1:1 ratio. It’s possible that all threads are assigned to one core, in which case there is no parallelism. But because this program <b>can</b> be executed out of order, it can be said that concurrency is possible.</p>
+
+<p>To summarize:</p>
+<ol>
+  <li>A function call is asynchronous when it is performed without waiting for the function to return.</li>
+  <li>A concurrent program has multiple parts that can be executed in random order, without affecting the final result<sup>3</sup>.</li>
+</ol>
+
+<hr />
+
+<p><sup>1</sup> Technically, these are goroutines, which act <i>like</i> threads, but are not threads. For the purposes of this article, they are effectively the same.</p>
+
+<p><sup>2</sup> It can be argued that with new CPU instructions, a single core can do multiple things in a single instruction. However, for the general audience, it is simpler to describe concurrent execution as multiple cores doing things at once.</p>
+
+<p><sup>3</sup> If the sample program’s purpose was to output numbers 0 through 9 in any order, then the final result is valid even if it is out of order.</p>
+
+      <div class="page-footer">
+        <div class="page-share">
+          <a href="https://twitter.com/intent/tweet?text=Concurrent vs. Asynchronous&url=/concurrent-vs-asynchronous/" title="Share on Twitter" rel="nofollow" target="_blank">Twitter</a>
+          <a href="https://facebook.com/sharer.php?u=/concurrent-vs-asynchronous/" title="Share on Facebook" rel="nofollow" target="_blank">Facebook</a>
+          <a href="https://plus.google.com/share?url=/concurrent-vs-asynchronous/" title="Share on Google+" rel="nofollow" target="_blank">Google+</a>
+        </div>
+        <div class="page-tag">
+          
+            <a href="/flexible-jekyll/tags#Programming" class="tag">&#35; Programming</a>
+          
+        </div>
+      </div>
+      <section class="comment-area">
+  <div class="comment-wrapper">
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+    </div> <!-- End Wrap Content -->
+  </div> <!-- End Page Content -->
+</article> <!-- End Article Page -->
+
+</div>
+
+  </div>
+  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>
