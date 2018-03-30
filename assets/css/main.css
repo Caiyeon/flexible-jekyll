@@ -868,7 +868,6 @@ table tfoot td {
 }
 
 .wrapper {
-  max-width: 1250px;
   position: relative;
 }
 
@@ -985,6 +984,7 @@ table tfoot td {
 }
 
 .content-box {
+  max-width: 1250px;
   padding: 20px;
   padding-left: 260px;
   display: -webkit-box;
@@ -1180,6 +1180,7 @@ a.newer-posts:hover {
 
 /* - - - - - - - - - - Post Page Styles - - - - - - - - - - */
 .wrap-content {
+  width: 70vw;
   padding: 20px;
 }
 
