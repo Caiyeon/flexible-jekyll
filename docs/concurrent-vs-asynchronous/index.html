@@ -125,13 +125,13 @@
       </header>
       <p>Once upon a time, most computers had one CPU containing one core. Parallelism was often an afterthought on programs and programming languages. Nowadays, it seems that everyone’s computer and toaster has multiple cores. As a consequence, parallel programming has become more of a necessity rather than a nice-to-have.</p>
 
-<p>When it comes to programming, some people tend to confuse asynchronism with concurrency. In reality, it’s not that they don’t know the difference - it’s more likely that they haven’t mapped the terms to their respective concepts.</p>
+<p>When it comes to parallel programming, some people confuse asynchronism with concurrency. It’s not that they don’t know the difference - it’s more likely that they haven’t mapped the terminology to their respective concepts.</p>
 
 <hr />
 
 <h2 id="asynchronism">Asynchronism</h2>
 
-<p>Consider this code: <a href="https://play.golang.org/p/TWFko5ulvBq">Try it</a></p>
+<p>Consider this code: <a href="https://play.golang.org/p/ZRSMt6RYVH-">try running it</a></p>
 
 <figure class="highlight"><pre><code class="language-go" data-lang="go"><span class="k">import</span><span class="x"> </span><span class="s">"fmt"</span><span class="x">
 
@@ -144,7 +144,7 @@
 
 <p>This simple program would print <code class="highlighter-rouge">0 1 2 3 4 5 6 7 8 9 Done!</code>. This program would execute <i>synchronously</i> because each execution is done at a time. Every <code class="highlighter-rouge">fmt.Printf()</code> must be finished, before printing the next number.</p>
 
-<p>As a contrast, consider this code: <a href="https://play.golang.org/p/LAnDCr8ip6c">Try it</a></p>
+<p>As a contrast, consider this code: <a href="https://play.golang.org/p/fgaPedmFLeV">try running it</a></p>
 
 <figure class="highlight"><pre><code class="language-go" data-lang="go"><span class="k">import</span><span class="x"> </span><span class="s">"time"</span><span class="x">
 </span><span class="k">import</span><span class="x"> </span><span class="s">"fmt"</span><span class="x">
@@ -168,7 +168,7 @@
 
 <p>And that’s the entire premise of asynchronous programming. It involves a thread calling a function without waiting for it to return, and proceeding to do other things.</p>
 
-<p>You may note that the numbers 0 through 9 still get printed consecutively. This is because the second thread<sup>1</sup> still prints the numbers in order in the for loop.</p>
+<p>This program still outputs numbers 0 through 9 consecutively. This is because the second thread<sup>1</sup> still prints the numbers in order in the for loop.</p>
 
 <hr />
 
@@ -176,7 +176,7 @@
 
 <p>Concurrency is when multiple things can be done at the same time.</p>
 
-<p>Consider the following:</p>
+<p>Consider the following: <a href="https://play.golang.org/p/9LZWSDm_uoi">try running it</a></p>
 
 <figure class="highlight"><pre><code class="language-go" data-lang="go"><span class="k">import</span><span class="x"> </span><span class="s">"time"</span><span class="x">
 </span><span class="k">import</span><span class="x"> </span><span class="s">"fmt"</span><span class="x">
