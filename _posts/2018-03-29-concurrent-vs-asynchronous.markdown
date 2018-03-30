@@ -8,13 +8,13 @@ tags: [Programming]
 
 Once upon a time, most computers had one CPU containing one core. Parallelism was often an afterthought on programs and programming languages. Nowadays, it seems that everyone's computer and toaster has multiple cores. As a consequence, parallel programming has become more of a necessity rather than a nice-to-have.
 
-When it comes to programming, some people tend to confuse asynchronism with concurrency. In reality, it's not that they don't know the difference - it's more likely that they haven't mapped the terms to their respective concepts.
+When it comes to parallel programming, some people confuse asynchronism with concurrency. It's not that they don't know the difference - it's more likely that they haven't mapped the terminology to their respective concepts.
 
 ---
 
 ## Asynchronism
 
-Consider this code: [Try it](https://play.golang.org/p/TWFko5ulvBq)
+Consider this code: [try running it](https://play.golang.org/p/ZRSMt6RYVH-)
 
 {% highlight go %}
 import "fmt"
@@ -29,7 +29,7 @@ func main() {
 
 This simple program would print `0 1 2 3 4 5 6 7 8 9 Done!`. This program would execute <i>synchronously</i> because each execution is done at a time. Every `fmt.Printf()` must be finished, before printing the next number.
 
-As a contrast, consider this code: [Try it](https://play.golang.org/p/LAnDCr8ip6c)
+As a contrast, consider this code: [try running it](https://play.golang.org/p/fgaPedmFLeV)
 
 {% highlight go %}
 import "time"
@@ -53,7 +53,7 @@ This time, printing 0 through 9 is done on a separate thread using `go <function
 
 And that's the entire premise of asynchronous programming. It involves a thread calling a function without waiting for it to return, and proceeding to do other things.
 
-You may note that the numbers 0 through 9 still get printed consecutively. This is because the second thread<sup>1</sup> still prints the numbers in order in the for loop.
+This program still outputs numbers 0 through 9 consecutively. This is because the second thread<sup>1</sup> still prints the numbers in order in the for loop.
 
 ---
 
@@ -61,7 +61,7 @@ You may note that the numbers 0 through 9 still get printed consecutively. This 
 
 Concurrency is when multiple things can be done at the same time.
 
-Consider the following:
+Consider the following: [try running it](https://play.golang.org/p/9LZWSDm_uoi)
 
 {% highlight go %}
 import "time"
