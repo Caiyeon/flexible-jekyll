@@ -4,7 +4,7 @@ title: Reference vs. Value Comparisons
 date: 2018-03-08 16:17:20 -0800
 description: References and optimizations in the Python interpreter
 img: python.png
-tags: [Python, Programming] # add tag
+tags: [Python, Programming]
 ---
 
 According to the [PEP 8] python style guide, comparisons to singletons should be done using `is` or `is not`. For example, when checking for the existence of a key in an object, the proper way to do so would be `if obj.get('key') is None`. That being said, this is only a style guide. Python will still happily compare singletons with equality operators such as `==`.
@@ -54,9 +54,9 @@ True
 
 When `x` and `y` are both assigned a value of 1000, they are referring to different locations in memory. This makes sense, as most variables behave this way. What doesn't make sense is why `x is y` holds true when they are set to a value of 1.
 
-As it turns out, the Python interpreter actually initializes integers -5 through 256 as singletons. This depends on the implementation of the interpreter, but seems to hold true for the most part. This is done for performance reasons. The speedup occurs, for example, when you perform `for i in range(10)`. Each item is a singleton, which makes the lookup faster.
+As it turns out, Python actually initializes integers -5 through 256 as singletons. This is done for performance reasons. The speedup occurs, for example, when you perform `for i in range(100)` and start using `i` in the loop.
 
-Can you think of why the following happens? Although Python is frequently referred to as a rather slow language, there are more optimizations than meets the eye.
+Although Python is frequently referred to as a rather slow language, there are more optimizations than meets the eye. Can you think of why the following happens?
 
 {% highlight python %}
 >>> x = 'abc'
